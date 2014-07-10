@@ -9,20 +9,6 @@ TODO make evaluation of lists for result possible
 TODO call by value needs own arithmetic rules,
 or only use infix for all
 
-TODO doc!, presentation
-was ich erzählen will:
-- gliederung
-- was die Aufgabe war
-- warum letztlich alles das gleiche ist
-- die syntax der sprachen
-- warum das cool ist
-- zeigen, dass es geht
-- was noch cool wäre (listen)
-- was noch zu tun ist
-- was mir spaß gemacht hat
-- was ich gelernt habe
-- fazit (eher nicht)
-
 \author{Lars Hansen}
 */
 
