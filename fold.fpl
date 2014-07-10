@@ -1,0 +1,14 @@
+def fold ( f, acc, li ) {
+    if empty(li) then {
+        acc
+    } else {
+        let a = (f (acc, head(li)));
+        let b = (tail(li));
+        fold(f, a, b)
+    }
+};
+let plus = (\x,y->{+ x y});
+let li = (
+    1 : [ 2,+ 1 2, 4]
+);
+fold ( plus, 0, li )

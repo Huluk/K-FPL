@@ -1,0 +1,22 @@
+"call by value:";
+function square_value (x) {
+    * x x
+};
+
+"call by name:";
+sub square_name (x) {
+    * x x
+};
+
+"call by need:";
+def square_need (x) {
+    * x x
+};
+
+let x = (4);
+let y = (4);
+let z = (4);
+
+[square_value(++x),
+ square_name(++y),
+ square_need(++z)]
