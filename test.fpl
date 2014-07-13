@@ -13,9 +13,9 @@ def square_need (x) {
     * x x
 };
 
-let x = (4);
-let y = (4);
-let z = (4);
+let x = (5);
+let y = (5);
+let z = (5);
 
 [square_value(++x),
  square_name(++y),

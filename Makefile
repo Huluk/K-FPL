@@ -6,3 +6,6 @@ compile:
 
 run:
 	krun test.fpl
+
+doc:
+	kompile fpl.k --backend pdf
