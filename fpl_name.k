@@ -2,6 +2,9 @@ require "ans_rules.k"
 
 module FPL-NAME
   imports FPL-CONFIG
+  /*@
+  Special rules for call by name.
+  */
 
   //@ lambda partial application
   rule proc X:Id,Xs:Ids -> {B} ( E:VExp,Es:VExps ) =>

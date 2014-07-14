@@ -1,5 +1,8 @@
 module FPL-VALUE
   imports FPL-CONFIG
+  /*@
+  Special rules for call by value.
+  */
 
   //@ lambda derivation
   syntax K ::= "lambda" Ids "->" Block "(" "ans" "," VExps ")"

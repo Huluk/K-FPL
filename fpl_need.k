@@ -1,29 +1,8 @@
-/*execute 
-\title{FPL}
-
-Problem: all base operations may be executed, /bc they don't check reading
-
-Trying out <thunk> execute
-
-
-current thoughts:
-
-if I create call-by-need lists,
-then these lists may contain arbitrary VExp.
-When one of these elements is evaluated (by calling hd),
-then it must be overridden in the original list,
-which may be anywhere in any variable.
-so, each list must contain a backlink in order to signify,
-part of which list it is.
-possible solution: make new list object:
-list_reference_starting_at_index_i,
-which solves this problem.
-
-\author{Lars Hansen}
-*/
 module FPL-NEED
   imports FPL-CONFIG
-  imports ANS-RULES
+  /*@
+  Special rules for call by need.
+  */
 
   //@ lambda partial application
   rule \ X:Id,Xs:Ids -> {B} ( E:VExp,Es:VExps ) =>

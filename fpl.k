@@ -51,7 +51,9 @@ module FPL-SYNTAX
                               thus creating considerable overhead
   */
 
-  //@ top level program expressions
+  /*@ top level program expressions: \newline
+  Expressions, variable and function definitions, halt program and sequential composition
+  */
   syntax PgmExp ::= VExp
                   | Let
                   | Funct
@@ -61,7 +63,20 @@ module FPL-SYNTAX
   //@ values or expressions which return values
   syntax VExp ::= Exp | Val
 
-  //@ expressions which return values
+  /*@
+  expressions which return values: \newline
+  \verb|Id| variable lookup \newline
+  \verb|++Id| pre-increment (with side-effects! \newline
+  \verb|AOp VExp VExp| arithmetics in polish notation \newline
+  \verb|VExp : VExp| haskell-style list extension \newline
+  \verb|VExp ( VExps )| function / lambda call \newline
+  \verb|if VExp then Block else Block| if condition \newline
+  \verb|$arg VExp| evaluate expression in caller context (e.g. function arguments)\newline
+  pre-defined list functions: \newline
+  \verb|empty ( VExp )| check if list is empty \newline
+  \verb|head ( VExp )| get head of list \newline
+  \verb|tail ( VExp )| get tail of list
+  */
   syntax Exp ::= Id // get value of variable
                > "++" Id // pre-increment // this adds side-effects!
                > AOp VExp VExp // arithmetics
@@ -74,17 +89,32 @@ module FPL-SYNTAX
                > "$arg" VExp // evaluate expression in caller context
                | "(" VExp ")" [bracket]
 
-  //@ variable assignment
+  /*@
+  variable assignment \newline
+  \verb|let Id = ( VExp )| for call by need \newline
+  \verb|set Id = ( VExp )| for call by name \newline
+  \verb|(Id := VExp)| for call by value
+  */
   syntax Let ::= "let" Id "=" "(" VExp ")" // call by need
                | "set" Id "=" "(" VExp ")" // call by name
                | Id ":=" VExp [right,strict(2)] // call by value
 
-  //@ function definition
+  /*@
+  function definition \newline
+  \verb|def Id ( Ids ) Block| for call by need \newline
+  \verb|sub Id ( Ids ) Block| for call by name \newline
+  \verb|function Id ( Ids ) Block| for call by value
+  */
   syntax Funct ::= "def" Id "(" Ids ")" Block // call by need
                  | "sub" Id "(" Ids ")" Block // call by name
                  | "function" Id "(" Ids ")" Block // call by value
 
-  //@ anonymous function definition
+  /*@
+  anonymous function definition \newline
+  \verb|\\ Ids -> Block| for call by need \newline
+  \verb|proc Ids -> Block| for call by name \newline
+  \verb|lambda Ids -> Block| for call by value
+  */
   syntax Lambda ::= "\\" Ids "->" Block // call by need
                   | "proc" Ids "->" Block // call by name
                   | "lambda" Ids "->" Block // call by value
@@ -92,6 +122,7 @@ module FPL-SYNTAX
   //@ list [eager]
   syntax Li ::= "[" VExps "]" [strict]
 
+  //@ code block for conditions and functions
   syntax Block ::= "{" PgmExp "}"
 
   //@ predefined functions
@@ -106,7 +137,7 @@ module FPL-SYNTAX
   //@ arithmetic operations (call by need)
   syntax AOp ::= "*" | "/" > "+" | "-" | "<"
 
-  //@ base values
+  //@ base values (string used for comments only)
   syntax Val ::= Int | Bool | String | Lambda | Li
 endmodule
 
@@ -135,19 +166,21 @@ module FPL-CONFIG
   // and changing start value in <reading> to true
   configuration
     <T>
-      //@ program (eager evaluation in main scope)
+      /*@
+      \emph{k} program (eager evaluation in main scope) \newline
+      \emph{env} scoped environment \newline
+      \emph{genv} global environment (functions only) \newline
+      \emph{store} heap memory \newline
+      \emph{fstack} function stack, each element with (environment,remaining commands) \newline
+      \emph{reading} reading mode for lazy evaluation \newline
+      \emph{ans} answer value of last expression
+      */
       <k color="green"> $PGM:K </k>
-      //@ scoped environment
       <env color="yellow"> .Map </env>
-      //@ global environment
       <genv color="orange"> .Map </genv>
-      //@ memory
       <store color="red"> .Map </store>
-      //@ function stack, each element with (environment,remaining commands)
       <fstack color="blue"> .List </fstack>
-      //@ reading mode for lazy evaluation
       <reading color="cyan"> false </reading>
-      //@ answer value of last expression
       <ans> false </ans>
     </T>
 endmodule
@@ -190,7 +223,7 @@ module FPL
   rule <k> .K </k>
        <env> ... (N |-> L) =>. </env>
        <store> ... (L |-> _) =>. ... </store>
-       //@ don't garbage collect main scope
+       // don't garbage collect main scope
        <fstack> ListItem(_) ... </fstack>
 
   //@ lambda - end of execution, change scope
