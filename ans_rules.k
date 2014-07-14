@@ -24,10 +24,10 @@ module ANS-RULES
   rule <k> if ans then T else F => if V then T else F ... </k>
        <ans> V </ans>
 
-  //@ lambda derivation rules
+  //@ function/lambda derivation rules
   rule <k> X:Exp ( Args:VExps ) => X ~> ans (Args) ... </k>
        <reading> false </reading>
-  //@ lambda read ans
+  //@ function/lambda read ans
   rule <k> ans ( Args ) => V (Args) ... </k>
        <ans> V </ans>
 

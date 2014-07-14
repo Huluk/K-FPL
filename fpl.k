@@ -24,7 +24,9 @@ module FPL-SYNTAX
                   the value is stored instead of the expression.
 
   Call by Value functions are eagerly evaluated, Call by Name and
-  Call by Need are lazyly evaluated.
+  Call by Need are lazyly evaluated. The result of a program or
+  function is always the last value. It is saved to the \emph{ans}
+  cell.
 
   FPL currently has the following features:
   - variable assignment (no override, all 3 evaluation methods)
@@ -187,6 +189,7 @@ endmodule
 
 module FPL
   imports FPL-CONFIG
+  imports ANS-RULES
   imports FPL-VALUE
   imports FPL-NAME
   imports FPL-NEED
